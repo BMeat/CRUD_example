@@ -1,6 +1,7 @@
 package com.example.demo.controller
 
 import com.example.demo.dto.ListDTO
+import com.example.demo.dto.UpdateDTO
 import com.example.demo.service.interfaces.BoardService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -38,5 +39,12 @@ class WebController(val boardService: BoardService) {
         val post = boardService.getDetail(id, memberId);
         model.addAttribute("post", post);
         return "detail";
+    }
+
+    @GetMapping("/update/{id}")
+    public fun update(@PathVariable id : Long, model: Model): String {
+        val post: UpdateDTO = boardService.getUpdateDTO(id);
+        model.addAttribute("post", post);
+        return "update";
     }
 }

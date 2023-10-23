@@ -13,7 +13,8 @@ class DetailDTO(
     var updatedAt: LocalDateTime,
     var adminViews: Int,
     var userViews: Int,
-    var author: String,
+    var memberId: String,
+    var memberName: String,
     var likes: Int,
 ) {
 

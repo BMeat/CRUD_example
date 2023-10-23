@@ -14,7 +14,7 @@
         <div>글번호 : <span th:text="${post.id}"></span></div>
         <div>등록 일시 : <span th:text="${post.createdAt}"></span></div>
         <div>수정 일시 : <span th:text="${post.updatedAt}"></span></div>
-        <div>작성자 : <span th:text="${post.author}"></span></div>
+        <div>작성자 : <span th:text="${post.memberName}"></span></div>
         <div>일반회원 조회수 : <span th:text="${post.userViews}"></span></div>
         <div>운영자 조회수 : <span th:text="${post.adminViews}"></span></div>
         <div>조회수 : <span th:text="${post.likes}"></span></div>
@@ -34,6 +34,7 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
 
+
         $(document).ready(function () {
             /*<![CDATA[*/
 
@@ -45,7 +46,7 @@
                 if (localStorage.getItem('id') != memberId) {
                     alert('권한이 없습니다');
                 } else {
-                    const path = 'http://localhost:8086/api/posts/' + id;
+                    const path = 'http://localhost:8080/api/posts/' + id;
 
                     $.ajax({
                         url: path,
@@ -53,13 +54,21 @@
                         contentType: 'application/json',
                     }).done((result) => {
                         console.log(result);
-                        if (response == 'success') {
+                        if (result == 'success') {
                             alert('삭제 성공')
-                            location.href = "http://localhost:8086"
+                            location.href = "http://localhost:8080"
                         } else {
                             alert(result);
                         }
                     });
+                }
+            })
+
+            $('#update').click((event) => {
+                if (localStorage.getItem('id') != memberId) {
+                    alert('권한이 없습니다');
+                } else {
+                    location.href = "http://localhost:8080/update/" + id;
                 }
             })
         });

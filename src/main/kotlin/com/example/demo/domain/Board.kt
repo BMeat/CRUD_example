@@ -44,4 +44,10 @@ class Board(title: String, content: String, member: Member) {
     fun countUserViews() {
         this.userViews++;
     }
+
+    fun update(title: String, content: String) {
+        this.title = title;
+        this.content = content;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

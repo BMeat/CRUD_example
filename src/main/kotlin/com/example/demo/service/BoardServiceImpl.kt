@@ -6,6 +6,7 @@ import com.example.demo.domain.MemberRole
 import com.example.demo.dto.DetailDTO
 import com.example.demo.dto.ListDTO
 import com.example.demo.dto.PostFormDTO
+import com.example.demo.dto.UpdateDTO
 import com.example.demo.repository.BoardRepository
 import com.example.demo.repository.MemberRepository
 import com.example.demo.service.interfaces.BoardService
@@ -20,7 +21,7 @@ import kotlin.collections.ArrayList
 @Transactional
 class BoardServiceImpl (var boardRepository: BoardRepository, var memberRepository: MemberRepository) : BoardService{
     override fun save(postFormDTO: PostFormDTO): ResponseEntity<*> {
-        val member : Optional<Member> = memberRepository.findById(postFormDTO.author);
+        val member : Optional<Member> = memberRepository.findById(postFormDTO.memberId);
         if (member.isPresent) {
             val post : Board = Board(postFormDTO.title, postFormDTO.content, member.get());
             boardRepository.save(post);
@@ -46,9 +47,8 @@ class BoardServiceImpl (var boardRepository: BoardRepository, var memberReposito
 
     override fun getDetail(id: Long, memberId: String): DetailDTO {
         val post: Board = boardRepository.findById(id).get();
-        if (!post.id.equals(memberId)) {
-            val member: Member = memberRepository.findById(memberId).get();
-            if (member.memberRole.equals(MemberRole.USER)) {
+        if (!post.member.id.equals(memberId)) {
+            if (post.member.memberRole.equals(MemberRole.USER)) {
                 post.countUserViews();
             } else {
                 post.countAdminViews();
@@ -62,9 +62,27 @@ class BoardServiceImpl (var boardRepository: BoardRepository, var memberReposito
             post.updatedAt,
             post.adminViews,
             post.userViews,
+            post.member.id,
             post.member.username,
             post.likes,
         )
         return detailDTO;
+    }
+
+    override fun remove(id: Long): ResponseEntity<*> {
+        boardRepository.deleteById(id);
+        return ResponseEntity("success", HttpStatus.OK);
+    }
+
+    override fun getUpdateDTO(id: Long): UpdateDTO {
+        val post: Board = boardRepository.findById(id).get();
+        val updateDTO: UpdateDTO = UpdateDTO(post.id, post.title, post.content);
+        return updateDTO;
+    }
+
+    override fun update(id: Long, updateDTO: UpdateDTO): ResponseEntity<*> {
+        var post: Board = boardRepository.findById(id).get();
+        post.update(updateDTO.title, updateDTO.content);
+        return ResponseEntity("success", HttpStatus.OK);
     }
 }
