@@ -3,8 +3,9 @@ package com.example.demo.domain
 import jakarta.persistence.*
 import org.hibernate.annotations.DynamicUpdate
 
+// Table 어노테이션도 추가해주시면 감사하겠습니다.
 @Entity
-@DynamicUpdate
+@DynamicUpdate // 이런게 있는지 몰랐네요
 class Member(id: String, password: String, username: String, memberRole: MemberRole) {
     @Id
     @Column(name = "member_id", nullable = false)
