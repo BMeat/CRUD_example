@@ -58,9 +58,9 @@
                             localStorage.setItem('id', id);
                             document.cookie = `id=${id}`;
                             location.href = "http://localhost:8080"
-                        } else {
-                            alert(response);
                         }
+                    }).fail((xhr, status, error) => {
+                        alert(xhr.responseText);
                     });
                 }
             });
