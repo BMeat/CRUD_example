@@ -15,10 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 
+// RestController 로 변경하면 ResponseEntity 를 직접 써주지 않아도 된다.
 @Controller
 @RequestMapping("/api")
-class ApiController(val memberService: MemberService, val boardService: BoardService) {
+class ApiController(
+    // private 가시성으로 만드는게 좋습니다.
+    val memberService: MemberService,
+    val boardService: BoardService
+) {
     @PostMapping("/signup")
+    // 기본이 public 이므로 생략 가능합니다.
     public fun signUp(@RequestBody signUpFormDTO: SignUpFormDTO): ResponseEntity<*> {
         return memberService.signUp(signUpFormDTO);
     }

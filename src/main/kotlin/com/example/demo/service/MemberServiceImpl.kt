@@ -16,8 +16,13 @@ import java.util.Optional
 @Transactional
 class MemberServiceImpl(var memberRepository: MemberRepository) : MemberService {
     override fun signUp(signUpFormDTO: SignUpFormDTO): ResponseEntity<*> {
+        // 반환타입을 직접 지정해주지 않아도 될거같습니다.
         val member : Optional<Member> = memberRepository.findById(signUpFormDTO.id);
         if (member.isPresent) {
+            /**
+             * https://cheese10yun.github.io/spring-guide-exception/
+             * 를 참고하셔서 에러를 처리해보세요.
+             */
             return ResponseEntity("fail", HttpStatus.OK);
         } else {
             val newMember: Member = Member(signUpFormDTO.id, signUpFormDTO.password, signUpFormDTO.name, MemberRole.USER);
@@ -26,6 +31,9 @@ class MemberServiceImpl(var memberRepository: MemberRepository) : MemberService 
         }
     }
 
+    /**
+     * 제네릭에 * (askterisk)를 사용하면 안될거같습니다.
+     */
     override fun login(loginDTO: LoginDTO): ResponseEntity<*> {
         val member : Optional<Member> = memberRepository.findById(loginDTO.id);
         if (member.isEmpty) {
