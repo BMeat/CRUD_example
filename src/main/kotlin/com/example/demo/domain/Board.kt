@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 class Board(title: String, content: String, member: Member): BaseTimeEntity() {
     // id 는 val 로 변경하는게 좋아보입니다.
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id", nullable = false)
+    @Column(name = "board_id", nullable = false) // board_id 대신 id 는 별로일까요?
     val id: Long = 0L
 
     @Column(name = "board_title", nullable = false)
@@ -52,6 +52,7 @@ class Board(title: String, content: String, member: Member): BaseTimeEntity() {
     var member: Member = member
         protected set
 
+    // count 보다는 increase 라는 이름이 더 좋을거같습니다.
     fun countAdminViews() {
         this.adminViews++
     }
