@@ -1,4 +1,3 @@
 package com.example.demo.dto
 
-class UpdateFormDTO(var title: String, var content: String) {
-}
+data class UpdateFormDTO(val title: String, val content: String)

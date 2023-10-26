@@ -11,6 +11,13 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.jpa' version '1.8.22'
 }
 
+allOpen {
+	// javax 가 아니라 spring boot 3.0 이상부터 jakarta 로 바뀌었습니다.
+	annotation('javax.persistence.Entity')
+	annotation('javax.persistence.MappedSuperClass')
+	// Embeddable 도 있으면 좋을거같습니다.
+}
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 

@@ -8,43 +8,42 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
 
 @Controller
-class WebController(val boardService: BoardService) {
+class WebController(private val boardService: BoardService) {
     @GetMapping("/")
-    public fun index(model: Model): String {
-        val posts : List<ListDTO> = boardService.getAll();
-        model.addAttribute("posts", posts);
-        return "home";
+    fun index(model: Model): String {
+        val posts : List<ListDTO> = boardService.getAll()
+        model.addAttribute("posts", posts)
+        return "home"
     }
 
     @GetMapping("/signup")
-    public fun signup(): String {
-        return "signup";
+    fun signup(): String {
+        return "signup"
     }
 
     @GetMapping("/signin")
-    public fun signin(): String {
-        return "signin";
+    fun signin(): String {
+        return "signin"
     }
 
     @GetMapping("/new")
-    public fun newPost(): String {
-        return "new";
+    fun newPost(): String {
+        return "new"
     }
 
     @GetMapping("/{id}")
-    public fun detail(@PathVariable id : Long, model: Model, @CookieValue("id") memberId: String): String {
-        val post = boardService.getDetail(id, memberId);
-        model.addAttribute("post", post);
-        return "detail";
+    fun detail(@PathVariable id : Long, model: Model, @CookieValue("id") memberId: String): String {
+        val post = boardService.getDetail(id, memberId)
+        model.addAttribute("post", post)
+        return "detail"
     }
 
     @GetMapping("/update/{id}")
-    public fun update(@PathVariable id : Long, model: Model): String {
-        val post: UpdateDTO = boardService.getUpdateDTO(id);
-        model.addAttribute("post", post);
-        return "update";
+    fun update(@PathVariable id : Long, model: Model): String {
+        val post: UpdateDTO = boardService.getUpdateDTO(id)
+        model.addAttribute("post", post)
+        return "update"
     }
 }

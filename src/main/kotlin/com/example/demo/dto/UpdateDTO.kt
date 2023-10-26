@@ -1,4 +1,3 @@
 package com.example.demo.dto
 
-class UpdateDTO(var id: Long, var title: String, var content: String) {
-}
+data class UpdateDTO(val id: Long, val title: String, val content: String)

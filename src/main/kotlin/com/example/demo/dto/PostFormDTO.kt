@@ -1,4 +1,3 @@
 package com.example.demo.dto
 
-class PostFormDTO(var title: String, var content: String, var memberId: String) {
-}
+data class PostFormDTO(val title: String, val content: String, val memberId: String)
